@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Macro Calculator | StrongHer Method</title>
+<meta name="description" content="Find your calories, protein, carbs and fat in about a minute. Free from Coach Caro Fitness.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0e0e0e;
+    --ink:#1a1a1a;
+    --pink:#f4a6c4;
+    --pink-deep:#e2508a;
+    --pink-soft:#fde7f0;
+    --white:#ffffff;
+    --gray:#6b6b6b;
+    --line:#e7e1e4;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--white);color:var(--ink);line-height:1.5}
+  .hero{background:var(--black);color:var(--white);padding:56px 20px 88px;text-align:center}
+  .tag{display:inline-block;background:var(--pink);color:var(--black);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:18px}
+  h1{font-family:"Archivo Black",sans-serif;font-size:clamp(32px,7vw,54px);line-height:1.05;letter-spacing:-.01em}
+  h1 span{color:var(--pink)}
+  .hero p{max-width:520px;margin:16px auto 0;color:#cfcfcf;font-size:17px}
+  .wrap{max-width:640px;margin:-56px auto 48px;padding:0 16px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 18px 40px rgba(0,0,0,.08);padding:28px}
+  .steps{display:flex;gap:8px;margin-bottom:22px}
+  .steps div{flex:1;height:5px;border-radius:5px;background:var(--line)}
+  .steps div.on{background:var(--pink-deep)}
+  h2{font-family:"Archivo Black",sans-serif;font-size:22px;margin-bottom:6px}
+  .sub{color:var(--gray);margin-bottom:20px;font-size:15px}
+  label{display:block;font-weight:600;font-size:14px;margin:16px 0 6px}
+  input,select{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:16px;background:var(--white);color:var(--ink)}
+  input:focus,select:focus{outline:none;border-color:var(--pink-deep)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .choices{display:grid;gap:10px}
+  .choice{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;cursor:pointer;font-weight:500;margin:0}
+  .choice input{width:auto;margin-top:4px;accent-color:var(--pink-deep)}
+  .choice small{display:block;color:var(--gray);font-weight:400}
+  .choice:has(input:checked){border-color:var(--pink-deep);background:var(--pink-soft)}
+  .btn{display:block;width:100%;margin-top:24px;padding:16px;border:0;border-radius:12px;background:var(--black);color:var(--white);font:inherit;font-weight:700;font-size:16px;cursor:pointer;text-align:center;text-decoration:none}
+  .btn:hover{background:var(--pink-deep)}
+  .btn.ghost{background:transparent;color:var(--gray);font-weight:500;margin-top:10px;padding:8px}
+  .btn[disabled]{opacity:.6;cursor:wait}
+  .err{color:var(--pink-deep);font-size:14px;margin-top:10px;min-height:20px}
+  .fine{font-size:12px;color:var(--gray);margin-top:12px;text-align:center}
+  .hidden{display:none}
+  .cal{background:var(--black);color:var(--white);border-radius:var(--radius);padding:24px;text-align:center;margin:8px 0 16px}
+  .cal .num{font-family:"Archivo Black",sans-serif;font-size:52px;color:var(--pink);line-height:1}
+  .cal .lbl{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#bdbdbd;margin-top:8px}
+  .macros{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .m{border:1.5px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center}
+  .m .g{font-family:"Archivo Black",sans-serif;font-size:28px}
+  .m .n{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+  .m.p{background:var(--pink-soft);border-color:var(--pink)}
+  .notes{margin-top:20px;display:grid;gap:12px}
+  .notes p{font-size:15px;padding-left:14px;border-left:3px solid var(--pink)}
+  .cta{margin-top:24px;background:var(--pink-soft);border-radius:var(--radius);padding:22px;text-align:center}
+  .cta h3{font-family:"Archivo Black",sans-serif;font-size:20px;margin-bottom:6px}
+  .cta p{color:var(--ink);font-size:15px}
+  footer{text-align:center;color:var(--gray);font-size:13px;padding:0 16px 40px}
+  footer a{color:var(--pink-deep);text-decoration:none;font-weight:600}
+  @media (max-width:480px){.row3{grid-template-columns:1fr 1fr}.card{padding:22px}.cal .num{font-size:44px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="tag">Free tool</div>
+  <h1>Your macros.<br><span>No guessing.</span></h1>
+  <p>Answer a few questions. Get your calories, protein, carbs and fat. Takes about a minute.</p>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <div class="steps"><div id="s1" class="on"></div><div id="s2"></div><div id="s3"></div></div>
+
+    <!-- STEP 1: BODY -->
+    <section id="step1">
+      <h2>The basics</h2>
+      <p class="sub">Just numbers. Nobody is judging.</p>
+
+      <label>Sex</label>
+      <div class="row">
+        <label class="choice"><input type="radio" name="sex" value="female" checked> Female</label>
+        <label class="choice"><input type="radio" name="sex" value="male"> Male</label>
+      </div>
+
+      <div class="row3">
+        <div><label for="age">Age</label><input id="age" type="number" inputmode="numeric" min="16" max="90" placeholder="34"></div>
+        <div><label for="ft">Height (ft)</label><input id="ft" type="number" inputmode="numeric" min="4" max="7" placeholder="5"></div>
+        <div><label for="in">Height (in)</label><input id="in" type="number" inputmode="numeric" min="0" max="11" placeholder="6"></div>
+      </div>
+      <label for="lbs">Current weight (lbs)</label>
+      <input id="lbs" type="number" inputmode="decimal" min="80" max="500" placeholder="160">
+
+      <div class="err" id="err1"></div>
+      <button class="btn" type="button" onclick="next1()">Next</button>
+    </section>
+
+    <!-- STEP 2: ACTIVITY + GOAL -->
+    <section id="step2" class="hidden">
+      <h2>Your week and your goal</h2>
+      <p class="sub">Be honest. Chasing kids counts. Folding laundry does not.</p>
+
+      <label>How active are you?</label>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="act" value="1.2"><span>Mostly sitting<small>Desk job, little exercise</small></span></label>
+        <label class="choice"><input type="radio" name="act" value="1.375" checked><span>Lightly active<small>Workouts 1 to 3 days a week</small></span></label>
+        <label class="choice"><input type="radio" name="act" value="1.55"><span>Moderately active<small>Workouts 3 to 5 days a week</small></span></label>
+        <label class="choice"><input type="radio" name="act" value="1.725"><span>Very active<small>Hard training 6 to 7 days a week</small></span></label>
+      </div>
+
+      <label>Main goal</label>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="goal" value="lose" checked><span>Lose fat<small>Steady, not miserable</small></span></label>
+        <label class="choice"><input type="radio" name="goal" value="maintain"><span>Maintain and tone<small>Recomp. Keep the weight, change the shape</small></span></label>
+        <label class="choice"><input type="radio" name="goal" value="build"><span>Build muscle<small>Small surplus, lots of lifting</small></span></label>
+      </div>
+
+      <button class="btn" type="button" onclick="next2()">Next</button>
+      <button class="btn ghost" type="button" onclick="show(1)">Back</button>
+    </section>
+
+    <!-- STEP 3: LEAD CAPTURE -->
+    <section id="step3" class="hidden">
+      <h2>Where should I send these?</h2>
+      <p class="sub">Your numbers show up on the next screen. I will also email you a copy so you do not lose them.</p>
+
+      <form id="leadForm" novalidate>
+        <label for="fname">First name</label>
+        <input id="fname" name="first_name" type="text" autocomplete="given-name" required>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+        <label for="phone">Phone <span style="color:var(--gray);font-weight:400">(optional)</span></label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel">
+        <label for="ig">Instagram handle <span style="color:var(--gray);font-weight:400">(optional)</span></label>
+        <input id="ig" name="instagram" type="text" placeholder="@yourhandle">
+
+        <label>What is the hardest part right now?</label>
+        <select id="struggle" name="biggest_struggle">
+          <option>Knowing what to eat</option>
+          <option>Staying consistent</option>
+          <option>Finding time with kids and work</option>
+          <option>Losing weight that will not move</option>
+          <option>Hitting protein</option>
+        </select>
+
+        <!-- honeypot for bots -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="err" id="err3"></div>
+        <button class="btn" id="submitBtn" type="submit">Show my macros</button>
+        <button class="btn ghost" type="button" onclick="show(2)">Back</button>
+        <p class="fine">No spam. Unsubscribe anytime.</p>
+      </form>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results" class="hidden">
+      <h2 id="hi">Here are your numbers</h2>
+      <p class="sub" id="goalLine"></p>
+
+      <div class="cal">
+        <div class="num" id="rCal">0</div>
+        <div class="lbl">Calories per day</div>
+      </div>
+      <div class="macros">
+        <div class="m p"><div class="g" id="rP">0g</div><div class="n">Protein</div></div>
+        <div class="m"><div class="g" id="rC">0g</div><div class="n">Carbs</div></div>
+        <div class="m"><div class="g" id="rF">0g</div><div class="n">Fat</div></div>
+      </div>
+
+      <div class="notes">
+        <p><strong>Start with protein.</strong> Hit it most days and the rest gets easier. Spread it across 3 to 4 meals.</p>
+        <p><strong>Give it two weeks.</strong> Scale weight moves around. Look at the trend, not one morning.</p>
+        <p><strong>These are a starting point.</strong> Real bodies need adjusting. Sleep, stress and your cycle all play a part.</p>
+      </div>
+
+      <div class="cta">
+        <h3>Want someone to adjust these for you?</h3>
+        <p>That is what I do inside StrongHer Method. Real coaching for busy moms who are done guessing.</p>
+        <a class="btn" id="ctaLink" href="https://YOUR-APPLICATION-PAGE-LINK" target="_blank" rel="noopener">Apply for coaching</a>
+      </div>
+
+      <button class="btn ghost" type="button" onclick="restart()">Start over</button>
+    </section>
+  </div>
+</main>
+
+<footer>
+  Made by Coach Caro Fitness &middot; <a href="https://instagram.com/caroline.gaspari" target="_blank" rel="noopener">@caroline.gaspari</a><br>
+  <span style="font-size:12px">For general education only. Not medical advice.</span>
+</footer>
+
+<script>
+  /* ========= SETTINGS: edit these two lines ========= */
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+  const APPLY_LINK = "https://YOUR-APPLICATION-PAGE-LINK";
+  /* ================================================= */
+
+  document.getElementById("ctaLink").href = APPLY_LINK;
+  let calc = null;
+
+  function show(n){
+    ["step1","step2","step3","results"].forEach((id,i)=>{
+      document.getElementById(id).classList.toggle("hidden", i !== n-1);
+    });
+    [1,2,3].forEach(i=>document.getElementById("s"+i).classList.toggle("on", i <= Math.min(n,3)));
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  const val = id => parseFloat(document.getElementById(id).value);
+  const radio = name => document.querySelector(`input[name="${name}"]:checked`).value;
+
+  function next1(){
+    const age=val("age"), ft=val("ft"), inch=val("in")||0, lbs=val("lbs");
+    const e=document.getElementById("err1");
+    if(!age||age<16||age>90){e.textContent="Enter an age between 16 and 90.";return;}
+    if(!ft||ft<4||ft>7||inch<0||inch>11){e.textContent="Check your height.";return;}
+    if(!lbs||lbs<80||lbs>500){e.textContent="Enter your weight in pounds.";return;}
+    e.textContent=""; show(2);
+  }
+  function next2(){ calc = compute(); show(3); }
+
+  function compute(){
+    const sex=radio("sex"), age=val("age"), lbs=val("lbs");
+    const totalIn=val("ft")*12+(val("in")||0);
+    const kg=lbs*0.453592, cm=totalIn*2.54;
+    // Mifflin-St Jeor
+    const bmr = 10*kg + 6.25*cm - 5*age + (sex==="male"?5:-161);
+    const act = parseFloat(radio("act"));
+    const tdee = bmr*act;
+    const goal = radio("goal");
+    let cals = goal==="lose" ? tdee*0.8 : goal==="build" ? tdee*1.1 : tdee;
+    const floor = sex==="male" ? 1500 : 1200;
+    cals = Math.max(Math.round(cals/10)*10, floor);
+
+    // Protein: 1g per lb, capped for higher bodyweights
+    const protein = Math.round(Math.min(lbs, sex==="male"?220:180));
+    const fat = Math.round((cals*0.28)/9);
+    const carbs = Math.max(Math.round((cals - protein*4 - fat*9)/4), 50);
+
+    const goalText = {lose:"Lose fat", maintain:"Maintain and tone", build:"Build muscle"}[goal];
+    const actText = document.querySelector('input[name="act"]:checked').parentElement.querySelector("span").firstChild.textContent.trim();
+    return {sex, age, height:`${val("ft")}'${val("in")||0}"`, weight_lbs:lbs, activity:actText, goal:goalText,
+            maintenance_calories:Math.round(tdee), calories:cals, protein_g:protein, carbs_g:carbs, fat_g:fat};
+  }
+
+  document.getElementById("leadForm").addEventListener("submit", async (ev)=>{
+    ev.preventDefault();
+    const err=document.getElementById("err3");
+    const name=document.getElementById("fname").value.trim();
+    const email=document.getElementById("email").value.trim();
+    if(!name){err.textContent="Add your first name.";return;}
+    if(!/^\S+@\S+\.\S+$/.test(email)){err.textContent="That email does not look right.";return;}
+    err.textContent="";
+
+    const btn=document.getElementById("submitBtn");
+    btn.disabled=true; btn.textContent="Calculating...";
+
+    const fd=new FormData(ev.target);
+    Object.entries(calc).forEach(([k,v])=>fd.append(k,v));
+    fd.append("_subject", `New macro calculator lead: ${name}`);
+    fd.append("source","Macro Calculator");
+
+    try{
+      await fetch(FORMSPREE_ENDPOINT,{method:"POST",body:fd,headers:{Accept:"application/json"}});
+    }catch(e){ /* still show results if the network hiccups */ }
+
+    renderResults(name);
+    btn.disabled=false; btn.textContent="Show my macros";
+  });
+
+  function renderResults(name){
+    document.getElementById("hi").textContent = `${name}, here are your numbers`;
+    const lines = {
+      "Lose fat":"Built for steady fat loss. About a 20% deficit.",
+      "Maintain and tone":"Built for maintenance. Lift heavy and keep protein high.",
+      "Build muscle":"Built for muscle gain. A small surplus, not a free-for-all."
+    };
+    document.getElementById("goalLine").textContent =
+      `${lines[calc.goal]} Your estimated maintenance is ${calc.maintenance_calories.toLocaleString()} calories.`;
+    document.getElementById("rCal").textContent = calc.calories.toLocaleString();
+    document.getElementById("rP").textContent = calc.protein_g+"g";
+    document.getElementById("rC").textContent = calc.carbs_g+"g";
+    document.getElementById("rF").textContent = calc.fat_g+"g";
+    show(4);
+    document.getElementById("s3").classList.add("on");
+  }
+
+  function restart(){ document.getElementById("leadForm").reset(); show(1); }
+</script>
+</body>
+</html>
